@@ -1,13 +1,10 @@
-﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
+﻿open System
 
-open System
-
-// Define a function to construct a message to print
-let from whom =
-    sprintf "from %s" whom
+let getResult minA maxA minB maxB =
+    [minA..maxA] |> List.allPairs [minB..maxB] |> List.map (fun (a: int,b) -> bigint.Pow(bigint(a), b)) |>
+    List.distinct |> List.length
 
 [<EntryPoint>]
 let main argv =
-    let message = from "F#" // Call the function
-    printfn "Hello world %s" message
+    printfn "%A" (getResult 2 100 2 100)
     0 // return an integer exit code
