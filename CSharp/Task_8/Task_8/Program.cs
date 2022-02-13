@@ -6,44 +6,17 @@ namespace Task_8
 {
     class Program
     {
-        static int GetResult(int[][] arr, int k)
+        static long GetResult(int[] arr, int k)
         {
-            int result = 0;
-            for (int i = 0; i < (arr.Length - k); i++)
-            {
-                for (int j = 0; j < arr[i].Length; j++)
-                {
-                    int mult = 1;
-                    for (int l = i; l < (i + k); l++)
-                    {
-                        mult *= arr[l][j];
-                    }
-                    result = Math.Max(result, mult);
-                }
-            }
-            for (int i = 0; i < (arr[0].Length - k); i++)
-            {
-                for (int j = 0; j < arr.Length; j++)
-                {
-                    int mult = 1;
-                    for (int l = i; l < (i + k); l++)
-                    {
-                        mult *= (int)arr[j][l];
-                    }
-                    result = Math.Max(result, mult);
-                }
-            }
+            long result = 0;
             for (int i = 0; i <= (arr.Length - k); i++)
             {
-                for (int j = 0; j <= (arr.Length - k); j++)
+                long mult = 1;
+                for (int j = i; j < (i + k); j++)
                 {
-                    int mult = 1;
-                    for (int l = 0; l < k; l++)
-                    {
-                        mult *= (int)arr[i + l][j + l];
-                    }
-                    result = Math.Max(result, mult);
+                    mult *= arr[j];
                 }
+                result = Math.Max(result, mult);
             }
             return result;
         }
@@ -70,8 +43,8 @@ namespace Task_8
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450";
-            int[][] nums = numbers.Split('\n').Select(x => x.Select(y => (int)y - '0').ToArray()).ToArray();
-            Console.WriteLine(GetResult(nums, 4));
+            int[] nums = numbers.Replace("\r\n", "").Select(x => (int)x - '0').ToArray();
+            Console.WriteLine(GetResult(nums, 13));
             Console.ReadKey();
         }
     }
