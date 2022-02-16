@@ -8,20 +8,28 @@ namespace Task_44
         static long GetMinDifference()
         {
             HashSet<long> hashset = new HashSet<long>();
-            for (long i = 1; ; i++)
+            long min = -1;
+            long start = 1000;
+            while (min == -1)
             {
-                long numb = (i * (3 * i - 1)) / 2;
-                hashset.Add(numb);
-                for (long j = i - 1; j >= 1; j--)
+                for (long i = 1; i <= start; i++)
                 {
-                    long sum2 = (j * (3 * j - 1)) / 2;
-                    if (hashset.Contains(numb - sum2) && hashset.Contains(numb + sum2))
+                    long sum = (i * (3 * i - 1)) / 2;
+                    hashset.Add(sum);
+                }
+                foreach (var c in hashset)
+                {
+                    foreach (var b in hashset)
                     {
-                        return numb - sum2;
+                        if ((hashset.Contains(c + b) && hashset.Contains(c - b)))
+                        {
+                            min = (min == -1) ? c - b : Math.Min(min, c - b);
+                        }
                     }
                 }
+                start *= 10L;
             }
-            return -1;
+            return min;
         }
         static void Main(string[] args)
         {
