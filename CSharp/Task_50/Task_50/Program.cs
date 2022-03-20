@@ -17,9 +17,9 @@ namespace Task_50
             return numb > 1;
         }
 
-        static List<int> GetNumbers(int max)
+        static List<long> GetNumbers(int max)
         {
-            List<int> result = new List<int>();
+            List<long> result = new List<long>();
             for (int i = 2; i <= max; i++)
             {
                 if (IsPrime(i))
@@ -30,28 +30,28 @@ namespace Task_50
             return result;
         }
 
-        static int GetResult(int max)
+        static long GetResult(int max)
         {
             var res = GetNumbers(max);
-            var hashset = new HashSet<int>(res);
+            var hashset = new HashSet<long>(res);
             int maxInd = 0;
-            int maxNumb = 0;
-            int result = 0;
-            int ind = 0;
-            int left = 0;
-            while (ind < res.Count)
+            long result = 0;
+            
+            for (int i = 1; i < res.Count; i++)
             {
-                maxNumb += res[ind];
-                ind++;
-                while (maxNumb >= max)
+                res[i] += res[i - 1];
+            }
+
+            for (int i = 0; i < res.Count; i++)
+            {
+                for (int j = res.Count - 1; j > (i + maxInd); j--)
                 {
-                    maxNumb -= res[left];
-                    left++;
-                }
-                if ((ind - left) >= maxInd)
-                {
-                    maxInd = (ind - left);
-                    result = maxNumb;
+                    long sum = res[j] - res[i];
+                    if (sum < max && (j - i) > maxInd && hashset.Contains(sum))
+                    {
+                        maxInd = j - i;
+                        result = sum;
+                    }
                 }
             }
             return result;
